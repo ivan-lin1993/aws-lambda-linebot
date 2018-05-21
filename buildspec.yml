@@ -8,3 +8,4 @@ artifacts:
   type: zip
   files:
     - appspec.yml
+    - buildspec.yml
