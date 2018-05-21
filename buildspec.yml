@@ -3,10 +3,10 @@ phases:
   install:
     commands:
       - npm install
-      - aws cloudformation package --template-file samTemplate.yaml --s3-bucket ivan-code-deploy
+      - aws cloudformation package --template-file appspec.yaml --s3-bucket ivan-code-deploy
                                    --output-template-file outputSamTemplate.yaml
 artifacts:
   type: zip
   files:
-    - samTemplate.yaml
+    - appspec.yaml
     - outputSamTemplate.yaml
