@@ -12,16 +12,7 @@ exports.handler = async (event) => {
     let replyToken = event['events'][0]['replyToken'];
     let post_data = {
         "replyToken": replyToken,
-        "messages":[
-            {
-                "type":"text",
-                "text":"Hello, user"
-            },
-            {
-                "type":"text",
-                "text":"May I help you?"
-            }
-        ]
+        "messages":reply(message)
     }
     var options = {
         method: "POST",
@@ -45,3 +36,21 @@ exports.handler = async (event) => {
     });  
     return "KKK"
 };
+
+
+function reply(msg){
+    let re_arry=[];
+    if (msg.indexOf("罵我")>=0){
+        re_arry.push({
+            "type":"text",
+            "text":"幹"
+        });
+    }
+    else{
+        re_arry.push({
+                "type":"text",
+                "text":"Hello, user"
+        });
+    }
+    return re_arry
+}
