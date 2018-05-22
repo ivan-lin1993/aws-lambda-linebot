@@ -2,7 +2,7 @@ version: 0.1
 phases:
   install:
     commands:
-      - npm install request-promise aws-sdk
+      - npm install request request-promise aws-sdk
       - aws cloudformation package --template-file samTemplate.yaml --s3-bucket ivan-code-deploy --output-template-file outputSamTemplate.yaml
 artifacts:
   type: zip
