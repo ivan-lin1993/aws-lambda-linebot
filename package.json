@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "line-bot-sdk": "^0.1.4",
+    "aws-sdk": "^2.244.1",
     "request": "^2.86.0",
     "request-promise": "^4.2.2"
   }
