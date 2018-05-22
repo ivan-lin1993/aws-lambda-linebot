@@ -46,6 +46,12 @@ function reply(msg){
             "text":"別"
         });
     }
+    else if (msg=="抽"){
+        re_arry.push({
+            "type":"text",
+            "text":"抽個頭"
+        });
+    }
     else{
         re_arry.push({
                 "type":"text",
