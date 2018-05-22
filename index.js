@@ -1,6 +1,6 @@
 'use strict';
 
-const LineBot = require('line-bot-sdk');
+// const LineBot = require('line-bot-sdk');
 // const request = require('request')
 const request = require('request-promise');
 
@@ -43,7 +43,7 @@ function reply(msg){
     if (msg.indexOf("罵我")>=0){
         re_arry.push({
             "type":"text",
-            "text":"幹"
+            "text":"別"
         });
     }
     else{
