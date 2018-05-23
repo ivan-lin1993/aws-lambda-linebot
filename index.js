@@ -3,6 +3,8 @@
 // const LineBot = require('line-bot-sdk');
 // const request = require('request')
 const request = require('request-promise');
+const pm2 = require('./pm2');
+
 
 exports.handler = async (event) => {
     console.log(JSON.stringify(event));
@@ -51,6 +53,9 @@ function reply(msg){
             "type":"text",
             "text":"抽個頭"
         });
+    }
+    else if (msg=="air"){
+        
     }
     else{
         re_arry.push({
