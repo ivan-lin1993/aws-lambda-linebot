@@ -10,7 +10,7 @@ let sleep = (ms)=>{
 
 let download_file = ()=>{
     return new Promise((resolve,reject)=>{
-        let file = fs.createWriteStream('test');
+        let file = fs.createWriteStream('tmp/test');
         request.get("https://tpairbox.blob.core.windows.net/blobfs/AirBoxData_V3.gz",(err,res)=>{
             console.log(res['body'])
         })
@@ -26,11 +26,11 @@ let demo = async() =>{
     console.log("end")
 }
 
-demo()
+// demo()
 
 module.exports ={
     get_data: async ()=>{
-        let res = await request.get("https://tpairbox.blob.core.windows.net/blobfs/AirBoxData_V3.gz")
-        return "kjkj"
+        let res = await download_file()
+        return res
     }
 }
