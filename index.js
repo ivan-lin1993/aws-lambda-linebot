@@ -1,57 +1,66 @@
-'use strict';
+'use strict'
 
-// const LineBot = require('line-bot-sdk');
-// const request = require('request')
-const request = require('request-promise');
-const pm2 = require('./pm2');
+const request = require('request-promise')
+const pm2 = require('./pm2')
 
 
-let to_list = data => {
-    let mlist = []
-    for (let i=0 ; i < data.length ; i+=1){
-        mlist.push(data[i].name)
+let reply_text = msg => {
+    return {
+        "type":"text",
+        "text":msg
     }
-    return mlist.join('\n')
+}
+
+
+let reply_template = mlist =>{
+    let m_array = []
+    for ( let i = 0; i < mlist.length ; i += 1 ){
+        m_array.push({
+            "type": "message",
+            "label": mlist[i],
+            "data": "air:pm25:" + mlist[i]
+        })
+    }
+    return {
+        "type":"template",
+        "template":{
+            "type":"button",
+            "text":"PM2.5",
+            "action": m_array
+        }
+    }
 }
 
 
 let reply = async msg => {
     let re_arry=[];
     if (msg.indexOf("罵我")>=0){
-        re_arry.push({
-            "type":"text",
-            "text":"別"
-        });
+        re_arry.push(reply_text("別"))
     }
     else if (msg=="抽"){
-        re_arry.push({
-            "type":"text",
-            "text":"抽個頭"
-        });
+        re_arry.push(reply_text('抽個頭'))
     }
     else if (msg.indexOf("air")>=0){
-        let data = await pm2.get_data()
-        console.log(data)
         if (msg.indexOf("list")>=0){
-            let mlist = to_list(data)
-            re_arry.push({
-                "type": "text",
-                "text": mlist
-            })
+            let res = await pm2.get_location_list()
+            re_arry.push(reply_template(res))
+        }
+        else if (msg.indexOf("air:pm2:") >= 0 ){
+            let location = msg.replace("air:pm2:","")
+            let res = await pm2.get_pm25(location)
+            re_arry.push(reply_text(
+                "地點: "+res.location+'\n'+
+                "PM2.5: "+res.pm25+"\n" + 
+                "最後更新時間: "+res.time+'\n'
+            ))
         }
         else{
-            re_arry.push({
-                "type": "text",
-                "text": "Use 'air list' to get location"
-            })
+            re_arry.push(reply_text("Use 'air list' to get location"))
         }
         
     }
     else{
-        re_arry.push({
-            "type":"text",
-            "text":"Hello, user"
-        });
+        re_arry.push(reply_text("嗨囉～"))
     }
     return re_arry
 }
@@ -78,13 +87,14 @@ exports.handler = async (event) => {
         body:post_data,
         json:true
     };
-    let k = await request(options)
+    let res = await request(options)
+    console.log(res)
     return "Done"
 };
 
 
 let test = async()=>{
     let j = await reply('air list')
-    console.log(j)
+    console.log(JSON.stringify(j))
 }
 // test()
