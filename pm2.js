@@ -28,6 +28,17 @@ let download_file = async ()=>{
     return pm25object.devices
 }
 
+let readfile = async ()=>{
+    let pm25file  = await fs.readFileSync('pm25')
+    let pm25object = JSON.parse(pm25file.toString())
+    console.log(pm25object)
+    let mlist = []
+    for (let i=0 ; i < pm25object.devices.length ; i+=1){
+        console.log(i)
+        mlist.push(pm25object.devices[i].name)
+    }
+    console.log(mlist.toString())
+}
 
 module.exports ={
     get_data: async ()=>{

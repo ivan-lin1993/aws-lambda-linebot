@@ -40,7 +40,7 @@ exports.handler = async (event) => {
 };
 
 
-function reply(msg){
+let reply = msg => {
     let re_arry=[];
     if (msg.indexOf("罵我")>=0){
         re_arry.push({
@@ -54,17 +54,37 @@ function reply(msg){
             "text":"抽個頭"
         });
     }
-    else if (msg=="air"){
-        re_arry.push({
-            "type":"text",
-            "text":pm2.get_data()
-        })
+    else if (msg.indexOf("air")){
+        let data = pm2.get_data()
+        console.log(data)
+        if (msg.indexOf("list")){
+            let mlist = to_list(data)
+            re_arry.push({
+                "type": "text",
+                "text": pm2.get_data()
+            })
+        }
+        else{
+            re_arry.push({
+                "type": "text",
+                "text": "Use 'air list' to get location"
+            })
+        }
+        
     }
     else{
         re_arry.push({
-                "type":"text",
-                "text":"Hello, user"
+            "type":"text",
+            "text":"Hello, user"
         });
     }
     return re_arry
+}
+
+let to_list = data => {
+    let mlist = []
+    for (let i=0 ; i < pm25object.devices.length ; i+=1){
+        mlist.push(pm25object.devices[i].name)
+    }
+    return mlist.join('\n')
 }
