@@ -61,7 +61,7 @@ let reply = msg => {
             let mlist = to_list(data)
             re_arry.push({
                 "type": "text",
-                "text": pm2.get_data()
+                "text": mlist
             })
         }
         else{
@@ -83,8 +83,8 @@ let reply = msg => {
 
 let to_list = data => {
     let mlist = []
-    for (let i=0 ; i < pm25object.devices.length ; i+=1){
-        mlist.push(pm25object.devices[i].name)
+    for (let i=0 ; i < data.devices.length ; i+=1){
+        mlist.push(data.devices[i].name)
     }
     return mlist.join('\n')
 }
