@@ -54,10 +54,10 @@ let reply = msg => {
             "text":"抽個頭"
         });
     }
-    else if (msg.indexOf("air")){
+    else if (msg.indexOf("air")>=0){
         let data = pm2.get_data()
         console.log(data)
-        if (msg.indexOf("list")){
+        if (msg.indexOf("list")>=0){
             let mlist = to_list(data)
             re_arry.push({
                 "type": "text",
