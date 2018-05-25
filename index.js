@@ -25,7 +25,7 @@ let reply_template = mlist =>{
         "type":"template",
         "altText":"PM2.5",
         "template":{
-            "type":"button",
+            "type":"buttons",
             "text":"PM2.5",
             "action": m_array
         }
