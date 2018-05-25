@@ -45,11 +45,11 @@ let reply = async msg => {
             let res = await pm2.get_location_list()
             re_arry.push(reply_template(res))
         }
-        else if (msg.indexOf("air:pm2:") >= 0 ){
-            let location = msg.replace("air:pm2:","")
+        else if (msg.indexOf("air:pm25:") >= 0 ){
+            let location = msg.replace("air:pm25:","")
             let res = await pm2.get_pm25(location)
             re_arry.push(reply_text(
-                "地點: "+res.location+'\n'+
+                "地點: "+location+'\n'+
                 "PM2.5: "+res.pm25+"\n" + 
                 "最後更新時間: "+res.time+'\n'
             ))
