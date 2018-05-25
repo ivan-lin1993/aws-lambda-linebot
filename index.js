@@ -55,7 +55,10 @@ function reply(msg){
         });
     }
     else if (msg=="air"){
-        
+        re_arry.push({
+            "type":"text",
+            "text":pm2.get_data()
+        })
     }
     else{
         re_arry.push({
