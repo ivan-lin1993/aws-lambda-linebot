@@ -27,7 +27,7 @@ let reply_template = mlist =>{
         "template":{
             "type":"buttons",
             "text":"PM2.5",
-            "action": m_array
+            "actions": m_array
         }
     }
 }
@@ -98,4 +98,4 @@ let test = async()=>{
     let j = await reply('air list')
     console.log(JSON.stringify(j))
 }
-test()
+// test()
