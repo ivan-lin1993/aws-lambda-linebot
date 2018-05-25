@@ -6,33 +6,8 @@ const request = require('request-promise');
 const pm2 = require('./pm2');
 
 
-exports.handler = async (event) => {
-    console.log(JSON.stringify(event));
-    let message = event['events'][0]['message'].text;
-    let return_message = 'postback:' + message;
-    let userId = event['events'][0]['source']['userId'];
-    let replyToken = event['events'][0]['replyToken'];
-    let post_data = {
-        "replyToken": replyToken,
-        "messages":reply(message)
-    }
-    var options = {
-        method: "POST",
-        uri: 'https://api.line.me/v2/bot/message/reply',
-        headers: {
-            'User-Agent': 'request',
-            'Content-Type':'application/json',
-            'Authorization':'Bearer ' + process.env.channel_access_token
-        },
-        body:post_data,
-        json:true
-    };
-    let k = await request(options)
-    return "Done"
-};
 
-
-let reply = msg => {
+let reply = async msg => {
     let re_arry=[];
     if (msg.indexOf("罵我")>=0){
         re_arry.push({
@@ -75,8 +50,39 @@ let reply = msg => {
 
 let to_list = data => {
     let mlist = []
-    for (let i=0 ; i < data.devices.length ; i+=1){
-        mlist.push(data.devices[i].name)
+    for (let i=0 ; i < data.length ; i+=1){
+        mlist.push(data[i].name)
     }
     return mlist.join('\n')
+}
+
+exports.handler = async (event) => {
+    console.log(JSON.stringify(event));
+    let message = event['events'][0]['message'].text;
+    let return_message = 'postback:' + message;
+    let userId = event['events'][0]['source']['userId'];
+    let replyToken = event['events'][0]['replyToken'];
+    let post_data = {
+        "replyToken": replyToken,
+        "messages":reply(message)
+    }
+    var options = {
+        method: "POST",
+        uri: 'https://api.line.me/v2/bot/message/reply',
+        headers: {
+            'User-Agent': 'request',
+            'Content-Type':'application/json',
+            'Authorization':'Bearer ' + process.env.channel_access_token
+        },
+        body:post_data,
+        json:true
+    };
+    let k = await request(options)
+    return "Done"
+};
+
+
+let test = async()=>{
+    let j = await reply('air list')
+    console.log(j)
 }
