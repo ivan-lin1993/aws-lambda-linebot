@@ -28,15 +28,7 @@ exports.handler = async (event) => {
         json:true
     };
     let k = await request(options)
-    .then( (res)=>{
-        console.log(res);
-    }).catch( (err)=>{
-        console.log(err);
-        return "Error";
-    }).then( ()=>{
-      return "Hello";
-    });  
-    return "KKK"
+    return "Done"
 };
 
 
@@ -55,7 +47,7 @@ let reply = msg => {
         });
     }
     else if (msg.indexOf("air")>=0){
-        let data = pm2.get_data()
+        let data = await pm2.get_data()
         console.log(data)
         if (msg.indexOf("list")>=0){
             let mlist = to_list(data)
