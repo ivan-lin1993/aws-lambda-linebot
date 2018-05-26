@@ -13,27 +13,20 @@ let reply_text = msg => {
 
 
 let reply_template = mlist =>{
-    let m_array = []
-    for ( let i = 0; i < mlist.length ; i += 1 ){
-        m_array.push({
-            "type": "message",
-            "label": mlist[i],
-            "data": "air:pm25:" + mlist[i]
-        })
-    }
     return {
         "type":"template",
         "altText":"PM2.5",
         "template":{
             "type":"buttons",
             "text":"PM2.5",
-            "actions": m_array
+            "actions": mlist
         }
     }
 }
 
 
 let reply = async msg => {
+    msg = msg.toLowerCase()
     let re_arry=[];
     if (msg.indexOf("罵我")>=0){
         re_arry.push(reply_text("別"))
@@ -41,10 +34,30 @@ let reply = async msg => {
     else if (msg=="抽"){
         re_arry.push(reply_text('抽個頭'))
     }
+    else if (msg == "help"){
+        re_arry.push(reply_template([{
+                "type": "message",
+                "label": "PM2.5 列表",
+                "data": "air list"
+            },{
+                "type": "message",
+                "label": '互相傷害',
+                "data": "罵我"
+            }
+        ]))
+    }
     else if (msg.indexOf("air")>=0){
         if (msg.indexOf("list")>=0){
-            let res = await pm2.get_location_list()
-            re_arry.push(reply_template(res))
+            let res_list = await pm2.get_location_list()
+            let res_msg = ""
+            res_list.forEach((data,index)=>{
+                console.log(data)
+                res_msg +="地點: "+data.name+'\n'+
+                "PM2.5: "+data.pm25+"\n" + 
+                "最後更新時間: "+data.time+'\n'+
+                "==============="+'\n'
+            })
+            re_arry.push(reply_text(res_msg))
         }
         else if (msg.indexOf("air:pm25:") >= 0 ){
             let location = msg.replace("air:pm25:","")
@@ -58,7 +71,6 @@ let reply = async msg => {
         else{
             re_arry.push(reply_text("Use 'air list' to get location"))
         }
-        
     }
     else{
         re_arry.push(reply_text("嗨囉～"))

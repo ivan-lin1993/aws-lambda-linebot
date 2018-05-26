@@ -27,10 +27,14 @@ let readfile2Json = async ()=>{
 }
 
 
-let to_list = data => {
+let to_list = (data,fieldlist) => {
     let mlist = []
     for (let i=0 ; i < data.devices.length ; i+=1){
-        mlist.push(data.devices[i].name)
+        let mobj={}
+        for (let j = 0; j< fieldlist.length ;j+=1){
+            mobj[fieldlist[j]]=data.devices[i][fieldlist[j]]
+        }
+        mlist.push(mobj)
     }
     return mlist
 }
@@ -39,7 +43,7 @@ let to_list = data => {
 let get_location_list = async () =>{
     await download_file()
     let mobj = await readfile2Json()
-    return to_list(mobj)
+    return to_list(mobj,['name','pm25','time'])
     
 }
 
