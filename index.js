@@ -55,7 +55,7 @@ let reply = async msg => {
                 res_msg +="地點: "+data.name+'\n'+
                 "PM2.5: "+data.pm25+"\n" + 
                 "最後更新時間: "+data.time+'\n'+
-                "==============="+'\n'
+                "----"+'\n'
             })
             re_arry.push(reply_text(res_msg))
         }
