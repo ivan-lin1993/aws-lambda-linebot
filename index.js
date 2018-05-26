@@ -73,8 +73,45 @@ let reply = async msg => {
         }
     }
     else{
-        re_arry.push(reply_text("嗨囉～"))
+        re_arry.push(
+            {
+                "type": "template",
+                "altText": "This is a buttons template",
+                "template": {
+                    "type": "buttons",
+                    "thumbnailImageUrl": "https://example.com/bot/images/image.jpg",
+                    "imageAspectRatio": "rectangle",
+                    "imageSize": "cover",
+                    "imageBackgroundColor": "#FFFFFF",
+                    "title": "Menu",
+                    "text": "Please select",
+                    "defaultAction": {
+                        "type": "uri",
+                        "label": "View detail",
+                        "uri": "http://example.com/page/123"
+                    },
+                    "actions": [
+                        {
+                          "type": "message",
+                          "label": "Buy",
+                          "data": "action=buy&itemid=123"
+                        },
+                        {
+                          "type": "postback",
+                          "label": "Add to cart",
+                          "data": "action=add&itemid=123"
+                        },
+                        {
+                          "type": "uri",
+                          "label": "View detail",
+                          "uri": "http://example.com/page/123"
+                        }
+                    ]
+                }
+              }
+        )
     }
+    console.log(JSON.stringify(re_arry))
     return re_arry
 }
 
@@ -107,7 +144,7 @@ exports.handler = async (event) => {
 
 
 let test = async()=>{
-    let j = await reply('air list')
+    let j = await reply('help')
     console.log(JSON.stringify(j))
 }
-// test()
+test()
