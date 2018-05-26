@@ -38,11 +38,11 @@ let reply = async msg => {
         re_arry.push(reply_template([{
                 "type": "message",
                 "label": "PM2.5 列表",
-                "data": "air list"
+                "text": "air list"
             },{
                 "type": "message",
                 "label": '互相傷害',
-                "data": "罵我"
+                "text": "罵我"
             }
         ]))
     }
@@ -73,43 +73,7 @@ let reply = async msg => {
         }
     }
     else{
-        re_arry.push(
-            {
-                "type": "template",
-                "altText": "This is a buttons template",
-                "template": {
-                    "type": "buttons",
-                    "thumbnailImageUrl": "https://example.com/bot/images/image.jpg",
-                    "imageAspectRatio": "rectangle",
-                    "imageSize": "cover",
-                    "imageBackgroundColor": "#FFFFFF",
-                    "title": "Menu",
-                    "text": "Please select",
-                    "defaultAction": {
-                        "type": "uri",
-                        "label": "View detail",
-                        "uri": "http://example.com/page/123"
-                    },
-                    "actions": [
-                        {
-                          "type": "message",
-                          "label": "Buy",
-                          "data": "action=buy&itemid=123"
-                        },
-                        {
-                          "type": "postback",
-                          "label": "Add to cart",
-                          "data": "action=add&itemid=123"
-                        },
-                        {
-                          "type": "uri",
-                          "label": "View detail",
-                          "uri": "http://example.com/page/123"
-                        }
-                    ]
-                }
-              }
-        )
+        re_arry.push(reply_text("嗨囉～"))
     }
     console.log(JSON.stringify(re_arry))
     return re_arry
