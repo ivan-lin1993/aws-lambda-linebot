@@ -52,12 +52,23 @@ let reply = async msg => {
             let res_msg = ""
             res_list.forEach((data,index)=>{
                 console.log(data)
-                res_msg +="地點: "+data.name+'\n'+
+                // res_msg 
+                let content = "地點: "+data.name+'\n'+
                 "PM2.5: "+data.pm25+"\n" + 
                 "最後更新時間: "+data.time+'\n'+
                 "----"+'\n'
+                // line message limit can't over 2000 char
+                // split message
+                if (content.length + res_msg.length >= 2000){
+                    re_arry.push(reply_text(res_msg))
+                    res_msg = content
+                }else{
+                    res_msg += content
+                }
             })
-            re_arry.push(reply_text(res_msg))
+            if (res_msg.length > 0){
+                re_arry.push(reply_text(res_msg))
+            }
         }
         else if (msg.indexOf("air:pm25:") >= 0 ){
             let location = msg.replace("air:pm25:","")
@@ -108,7 +119,8 @@ exports.handler = async (event) => {
 
 
 let test = async()=>{
-    let j = await reply('help')
+    let j = await reply('air list')
+    console.log("---------------")
     console.log(JSON.stringify(j))
 }
 test()
