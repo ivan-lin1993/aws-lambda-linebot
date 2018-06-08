@@ -2,7 +2,7 @@
 
 const request = require('request-promise')
 const pm2 = require('./pm2')
-
+const ubike = require('./youbike.js')
 
 let reply_text = msg => {
     return {
@@ -83,6 +83,18 @@ let reply = async msg => {
             re_arry.push(reply_text("Use 'air list' to get location"))
         }
     }
+    else if(msg=="ubike"){
+        let datalist = await ubike.get_youbike_list()
+        let res_msg = ""
+        for(let i =0;i<datalist.length;i+=1){
+            res_msg += datalist[i]['name'] + ":\n" +
+            "總共:" + datalist[i]['total'] + "\n" +
+            "可用:" + datalist[i]['avalible'] + "\n" +
+            "空位:" + datalist[i]['space'] +
+            "最後更新時間:" + datalist[i]['time'] + "\n======================\n"
+        }
+        re_arry.push(reply_text(res_msg))
+    }
     else{
         re_arry.push(reply_text("嗨囉～"))
     }
@@ -119,8 +131,6 @@ exports.handler = async (event) => {
 
 
 let test = async()=>{
-    let j = await reply('air list')
-    console.log("---------------")
-    console.log(JSON.stringify(j))
+    let j = await reply('ubike')
 }
 test()
