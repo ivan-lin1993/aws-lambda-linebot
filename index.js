@@ -24,27 +24,37 @@ let reply_template = mlist =>{
     }
 }
 
+let help = () => {
+    return reply_template([{
+        "type": "message",
+        "label": "PM2.5 列表",
+            "text": "air list"
+        },{
+            "type": "message",
+            "label": 'Youbike',
+            "text": "ubike"
+        },{
+            "type": "message",
+            "label": '月經使用',
+            "text": "period"
+        }
+    ]);
+}
 
 let reply = async msg => {
     msg = msg.toLowerCase()
     let re_arry=[];
-    if (msg.indexOf("罵我")>=0){
-        re_arry.push(reply_text("別"))
+    if (msg == "help"){
+        re_arry.push(help());
     }
-    else if (msg=="抽"){
-        re_arry.push(reply_text('抽個頭'))
-    }
-    else if (msg == "help"){
-        re_arry.push(reply_template([{
-                "type": "message",
-                "label": "PM2.5 列表",
-                "text": "air list"
-            },{
-                "type": "message",
-                "label": '互相傷害',
-                "text": "罵我"
-            }
-        ]))
+    else if (msg.indexOf("period")>=0){
+        if (msg.indexOf("get")>=0){
+            let text = "last time: \n";
+            text +="danger: \n" ;
+            text +="safe: \n" ;
+            text +="next: " ;
+            re_arry.push(reply_text(text));
+        }
     }
     else if (msg.indexOf("air")>=0){
         if (msg.indexOf("list")>=0){
@@ -96,7 +106,14 @@ let reply = async msg => {
         re_arry.push(reply_text(res_msg))
     }
     else{
-        re_arry.push(reply_text("嗨囉～"))
+        re_arry.push(reply_text("嗨囉～"));
+        re_arry.push(reply_template([{
+            "type": "message",
+            "label": "功能列表",
+                "text": "help"
+            }
+        ]));
+
     }
     console.log(JSON.stringify(re_arry))
     return re_arry
