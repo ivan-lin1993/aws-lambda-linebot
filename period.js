@@ -47,10 +47,10 @@ let get_data = async () =>{
     let danger_end2 = new Date( parseInt(year), parseInt(month)-1, parseInt(day)+19, -16)
 
     let res = ""
-    res +="last time: " + format_date(date) + " ~ " + format_date(date_end) + "\n";
-    res +="danger: " + format_date(danger_start1) + " ~ " + format_date(danger_end1) + "\n";
-    res +="next time: " + format_date(next_date) + " ~ " + format_date(next_date_end) + "\n";
-    res +="danger: " + format_date(danger_start2) + " ~ " + format_date(danger_end2) + "\n";
+    res +="last time:\n" + format_date(date) + " ~ " + format_date(date_end) + "\n\n";
+    res +="danger:\n" + format_date(danger_start1) + " ~ " + format_date(danger_end1) + "\n\n";
+    res +="next time:\n" + format_date(next_date) + " ~ " + format_date(next_date_end) + "\n\n";
+    res +="danger:\n" + format_date(danger_start2) + " ~ " + format_date(danger_end2) ;
     // console.log(format_date(date))
     // console.log(format_date(danger_start1))
     // console.log(format_date(danger_end1))

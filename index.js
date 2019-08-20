@@ -76,7 +76,7 @@ let reply = async msg => {
                 },{
                     "type": "message",
                     "label": "設置",
-                    "text": "period put:"
+                    "text": "period put: "
                 },
             ],"月經"))
         }
