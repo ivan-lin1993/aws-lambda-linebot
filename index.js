@@ -53,7 +53,7 @@ let reply = async msg => {
             let text = await period.get_data();
             re_arry.push(reply_text(text));
         }
-        else if(msg.indexOf("period put: ")>=0){
+        else if(msg.indexOf("period put:")>=0){
             let date = msg.split("period put: ")[1]
             if (date.length == 10){
                 let success = await period.update_date(date);
