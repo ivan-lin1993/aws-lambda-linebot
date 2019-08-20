@@ -3,6 +3,7 @@
 const request = require('request-promise')
 const pm2 = require('./pm2')
 const ubike = require('./youbike.js')
+const period = require('./period.js')
 
 let reply_text = msg => {
     return {
@@ -15,10 +16,10 @@ let reply_text = msg => {
 let reply_template = mlist =>{
     return {
         "type":"template",
-        "altText":"PM2.5",
+        "altText":"功能",
         "template":{
             "type":"buttons",
-            "text":"PM2.5",
+            "text":"功能",
             "actions": mlist
         }
     }
@@ -35,7 +36,7 @@ let help = () => {
             "text": "ubike"
         },{
             "type": "message",
-            "label": '月經使用',
+            "label": '月經查詢',
             "text": "period"
         }
     ]);
@@ -49,11 +50,35 @@ let reply = async msg => {
     }
     else if (msg.indexOf("period")>=0){
         if (msg.indexOf("get")>=0){
-            let text = "last time: \n";
-            text +="danger: \n" ;
-            text +="safe: \n" ;
-            text +="next: " ;
+            let text = await period.get_data();
             re_arry.push(reply_text(text));
+        }
+        else if(msg.indexOf("period put:")>=0){
+            let date = msg.split("period put:")[1]
+            if (date.length == 10){
+                let success = await period.update_date(date);
+                if (success){
+                    re_arry.push(reply_text("Update to " + date))
+                }else{
+                    re_arry.push(reply_text("Failed"))
+                }
+            }
+            else{
+                re_arry.push(reply_text("period put: yyyy/mm/dd"))
+            }
+        }
+        else{
+            re_arry.push(reply_template([
+                {
+                    "type": "message",
+                    "label": "查詢",
+                    "text": "period get"
+                },{
+                    "type": "message",
+                    "label": "設置",
+                    "text": "period put:"
+                },
+            ]))
         }
     }
     else if (msg.indexOf("air")>=0){
@@ -148,6 +173,6 @@ exports.handler = async (event) => {
 
 
 let test = async()=>{
-    let j = await reply('ubike')
+    let j = await reply('period get')
 }
 test()
