@@ -87,7 +87,7 @@ module.exports ={
         return await get_data()
     },
     update_date: async (date) =>{
-        await update_date(date)
+        return await update_date(date)
     }
 }
 let test = async ()=>{

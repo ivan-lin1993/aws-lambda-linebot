@@ -53,8 +53,8 @@ let reply = async msg => {
             let text = await period.get_data();
             re_arry.push(reply_text(text));
         }
-        else if(msg.indexOf("period put:")>=0){
-            let date = msg.split("period put:")[1]
+        else if(msg.indexOf("period put: ")>=0){
+            let date = msg.split("period put: ")[1]
             if (date.length == 10){
                 let success = await period.update_date(date);
                 if (success){
@@ -173,6 +173,6 @@ exports.handler = async (event) => {
 
 
 let test = async()=>{
-    let j = await reply('period get')
+    let j = await reply('period put: 2019/07/26')
 }
 test()
