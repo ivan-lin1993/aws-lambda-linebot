@@ -22,6 +22,7 @@ let get_s3_value =  async () =>{
     }).catch((err)=>{
         console.log(err)
     })
+    console.log(body.toString())
     return body.toString();
     
 }
@@ -32,7 +33,7 @@ let format_date = (date)=>{
 
 let get_data = async () =>{
     let mdate = await get_s3_value()
-    let dlist = mdate.split("-")
+    let dlist = mdate.split("/")
     let year= dlist[0]
     let month= dlist[1]
     let day= dlist[2]

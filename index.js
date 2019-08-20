@@ -13,13 +13,13 @@ let reply_text = msg => {
 }
 
 
-let reply_template = mlist =>{
+let reply_template = (mlist,function_text="功能")=>{
     return {
         "type":"template",
         "altText":"功能",
         "template":{
             "type":"buttons",
-            "text":"功能",
+            "text":function_text,
             "actions": mlist
         }
     }
@@ -78,7 +78,7 @@ let reply = async msg => {
                     "label": "設置",
                     "text": "period put:"
                 },
-            ]))
+            ],"月經"))
         }
     }
     else if (msg.indexOf("air")>=0){
@@ -173,6 +173,7 @@ exports.handler = async (event) => {
 
 
 let test = async()=>{
-    let j = await reply('period put: 2019/07/26')
+    // let j = await reply('period put: 2019/07/26')
+    let j = await reply('period get')
 }
 test()
